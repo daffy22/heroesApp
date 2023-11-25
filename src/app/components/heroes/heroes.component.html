@@ -1,0 +1,59 @@
+<h1>Heroes</h1>
+
+<button mat-raised-button color="primary" (click)="changeAction('create')">
+  Create
+</button>
+
+<button mat-raised-button color="primary" (click)="changeAction('filter')">
+  Filter
+</button>
+
+<button mat-raised-button color="primary" (click)="changeAction('list')">
+  List
+</button>
+
+<br>
+<br>
+
+<!--Crear-->
+<div *ngIf="action == 'create'">
+
+  <form [formGroup]="heroForm">
+
+    <mat-label>Id</mat-label>
+    <input type="number" formControlName="id" matInput>
+
+    <br>
+    <br>
+
+    <mat-label>Name</mat-label>
+    <input type="text" formControlName="name" matInput>
+
+    <br>
+    <br>
+
+    <mat-label>Power</mat-label>
+    <input type="number"  formControlName="power" matInput>
+
+    <button mat-raised-button color="primary" (click)="createHero()">Create</button>
+  </form>
+
+</div>
+
+<!--Filtrar-->
+<div *ngIf="action == 'filter'">
+  <mat-list role="list" *ngFor="let hero of heroesFiltered">
+    <mat-list-item role="listitem"><strong>Nombre del Heroe:</strong> {{ hero.name }}</mat-list-item>
+    <mat-list-item role="listitem"><strong>Id: </strong>{{ hero.id }}</mat-list-item>
+    <mat-list-item role="listitem"><strong>Power:</strong> {{ hero.power }}</mat-list-item>
+  </mat-list>
+</div>
+
+<!--Listar-->
+<div *ngIf="action == 'list'">
+  <mat-list role="list" *ngFor="let hero of heroes">
+    <mat-list-item role="listitem"><strong>Nombre del Heroe:</strong> {{ hero.name }}</mat-list-item>
+    <mat-list-item role="listitem"><strong>Id: </strong>{{ hero.id }}</mat-list-item>
+    <mat-list-item role="listitem"><strong>Power:</strong> {{ hero.power }}</mat-list-item>
+  </mat-list>
+</div>
