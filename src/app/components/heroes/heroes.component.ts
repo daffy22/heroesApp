@@ -2,13 +2,18 @@ import { Component } from '@angular/core';
 import { Hero } from '../../models/hero.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HeroService } from '../../services/hero.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
+  styleUrls: [ './heroes.component.css' ]
 })
 export class HeroesComponent {
+
+  heroes!: Hero[];
+  heroesFiltered!: Hero[];
+  action: string = 'filter';
 
   heroForm: FormGroup = this.fb.group({
     id: [],
@@ -16,13 +21,8 @@ export class HeroesComponent {
     power: []
   });
 
-  heroes!: Hero[];
-
-  action: string = 'list';
-
-  heroesFiltered!: Hero[];
-
-  constructor(private fb: FormBuilder, private heroService: HeroService) {
+  constructor(private fb: FormBuilder, private heroService: HeroService,
+              private snackBar: MatSnackBar) {
     this.heroService.getHeroes()
       .subscribe(heroes => {
         this.heroes = heroes;
@@ -35,15 +35,20 @@ export class HeroesComponent {
   }
 
   createHero() {
-    const hero: Hero = {
+    const newHero: Hero = {
       id: this.heroForm.get('id')?.value,
       name: this.heroForm.get('name')?.value,
       power: this.heroForm.get('power')?.value,
     }
 
-    this.heroes.push(hero);
-    this.heroes = [...this.heroes];
-    this.heroesFiltered = this.heroes.filter(hero => hero.power > 100);
-    this.heroForm.reset();
+    try {
+      this.heroes = [ ...this.heroes, newHero ];
+      this.heroesFiltered = this.heroes.filter(hero => hero.power > 100);
+      this.heroForm.reset();
+      this.snackBar.open('Superhero created: ' + newHero.name.toUpperCase(), 'OK');
+    } catch (e) {
+      console.log(e);
+      this.snackBar.open('An error has occurred', 'Exit');
+    }
   }
 }

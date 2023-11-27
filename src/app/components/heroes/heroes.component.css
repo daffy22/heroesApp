@@ -1,0 +1,31 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: right ;
+}
+
+.card {
+  max-width: 400px;
+}
+
+.header-image {
+  background-image: url('https://cdn2.vectorstock.com/i/1000x1000/76/76/superhero-logo-template-vector-24557676.jpg');
+  background-size: cover;
+}
+
+.three-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 3rem;
+  row-gap: 5rem;
+}
